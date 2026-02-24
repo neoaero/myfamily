@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --gold: #c9a85c;
       --gold-light: #e8c97a;
@@ -19,317 +18,106 @@
       --muted: #9a9585;
       --border: rgba(201,168,92,0.22);
     }
+    body { font-family: 'Noto Sans KR', sans-serif; background: var(--dark); color: var(--text); font-weight: 300; }
 
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: var(--dark);
-      color: var(--text);
-      font-weight: 300;
-    }
-
-    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       background: rgba(12,15,30,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; }
     nav ul li a {
-      display: block;
-      padding: 18px 22px;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: color 0.25s;
+      display: block; padding: 18px 22px; text-decoration: none;
+      color: var(--muted); font-size: 0.78rem; letter-spacing: 2px;
+      text-transform: uppercase; transition: color 0.25s;
     }
     nav ul li a:hover, nav ul li a.active { color: var(--gold); }
 
-    /* ── HERO ── */
     .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 640px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
+      position: relative; height: 100vh; min-height: 640px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
     }
     .hero-bg {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
-      filter: brightness(0.38);
-      transform: scale(1.06);
-      transition: transform 10s ease;
+      filter: brightness(0.38); transform: scale(1.06); transition: transform 10s ease;
     }
     .hero:hover .hero-bg { transform: scale(1.01); }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 24px;
-    }
-    .eyebrow {
-      display: inline-block;
-      font-size: 0.73rem;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 22px;
-    }
+    .hero-content { position: relative; z-index: 2; padding: 0 24px; }
+    .eyebrow { display: inline-block; font-size: 0.73rem; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 22px; }
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 600;
-      color: #fff;
-      line-height: 1.18;
-      margin-bottom: 22px;
-      letter-spacing: 2px;
+      font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 600;
+      color: #fff; line-height: 1.18; margin-bottom: 22px; letter-spacing: 2px;
     }
-    .hero-sub {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.65);
-      line-height: 2;
-      max-width: 480px;
-      margin: 0 auto 40px;
-    }
+    .hero-sub { font-size: 0.95rem; color: rgba(255,255,255,0.65); line-height: 2; max-width: 480px; margin: 0 auto 40px; }
     .btn-outline {
-      display: inline-block;
-      padding: 13px 40px;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      transition: background 0.3s, color 0.3s;
+      display: inline-block; padding: 13px 40px; border: 1px solid var(--gold);
+      color: var(--gold); text-decoration: none; font-size: 0.75rem;
+      letter-spacing: 3.5px; text-transform: uppercase; transition: background 0.3s, color 0.3s;
     }
     .btn-outline:hover { background: var(--gold); color: var(--dark); }
     .scroll-hint {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.68rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.35);
     }
-    .scroll-hint::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 44px;
-      background: rgba(255,255,255,0.25);
-      margin: 10px auto 0;
-    }
+    .scroll-hint::after { content: ''; display: block; width: 1px; height: 44px; background: rgba(255,255,255,0.25); margin: 10px auto 0; }
 
-    /* ── MAIN ── */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 24px 60px;
-    }
+    main { max-width: 1200px; margin: 0 auto; padding: 100px 24px 60px; }
     section { margin-bottom: 110px; }
+    .sec-head { text-align: center; margin-bottom: 54px; }
+    .sec-head .eyebrow { display: block; margin-bottom: 14px; }
+    .sec-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 600; color: var(--text); line-height: 1.3; }
+    .divider { width: 56px; height: 1px; background: var(--gold); margin: 18px auto 0; }
 
-    .sec-head {
-      text-align: center;
-      margin-bottom: 54px;
-    }
-    .sec-head .eyebrow { margin-bottom: 14px; }
-    .sec-head h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.3;
-    }
-    .divider {
-      width: 56px;
-      height: 1px;
-      background: var(--gold);
-      margin: 18px auto 0;
-    }
-
-    /* ── FAMILY CARDS ── */
-    .family-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-    }
+    .family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
     @media (max-width: 900px) { .family-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 500px)  { .family-grid { grid-template-columns: 1fr; } }
 
     .member-card {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      background: var(--card);
-      border: 1px solid var(--border);
-      overflow: hidden;
+      text-decoration: none; color: inherit; display: block;
+      background: var(--card); border: 1px solid var(--border); overflow: hidden;
       transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
     }
-    .member-card:hover {
-      transform: translateY(-9px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-      border-color: var(--gold);
-    }
-    .card-img {
-      position: relative;
-      height: 230px;
-      overflow: hidden;
-      background: #1a2035;
-    }
-    .card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s ease;
-    }
+    .member-card:hover { transform: translateY(-9px); box-shadow: 0 24px 60px rgba(0,0,0,0.5); border-color: var(--gold); }
+    .card-img { position: relative; height: 230px; overflow: hidden; background: #1a2035; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
     .member-card:hover .card-img img { transform: scale(1.07); }
-    .card-img-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(12,15,30,0.65) 0%, transparent 55%);
-    }
-    .card-body {
-      padding: 22px 20px 24px;
-    }
-    .card-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.55rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 5px;
-    }
-    .card-role {
-      font-size: 0.7rem;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .card-desc {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.75;
-    }
+    .card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,30,0.65) 0%, transparent 55%); }
+    .card-body { padding: 22px 20px 24px; }
+    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .card-role { font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .card-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.75; }
 
-    /* ── DESTINATION GALLERY ── */
-    .dest-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+    .dest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     @media (max-width: 700px) { .dest-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 440px) { .dest-grid { grid-template-columns: 1fr; } }
-
-    .dest-item {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      aspect-ratio: 4/3;
-      background: #131928;
-      cursor: default;
-    }
-    .dest-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.55s ease;
-    }
+    .dest-item { position: relative; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 4/3; background: #131928; }
+    .dest-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
     .dest-item:hover img { transform: scale(1.06); }
-    .dest-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(12,15,30,0.85) 0%, rgba(12,15,30,0.1) 55%);
-    }
-    .dest-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 20px 16px 16px;
-      pointer-events: none;
-    }
-    .dest-caption strong {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: var(--gold-light);
-      letter-spacing: 1px;
-      margin-bottom: 3px;
-    }
-    .dest-caption span {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.65);
-      letter-spacing: 0.5px;
-    }
+    .dest-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,30,0.85) 0%, rgba(12,15,30,0.1) 55%); }
+    .dest-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px 16px; pointer-events: none; }
+    .dest-caption strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-light); letter-spacing: 1px; margin-bottom: 3px; }
+    .dest-caption span { font-size: 0.78rem; color: rgba(255,255,255,0.65); letter-spacing: 0.5px; }
 
-    /* ── STORY BOX ── */
-    .story-box {
-      max-width: 720px;
-      margin: 0 auto;
-      text-align: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 56px 48px;
-    }
+    .story-box { max-width: 720px; margin: 0 auto; text-align: center; background: var(--card); border: 1px solid var(--border); padding: 56px 48px; }
     @media (max-width: 600px) { .story-box { padding: 40px 24px; } }
-    .story-box p {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 2.1;
-    }
+    .story-box p { font-size: 1rem; color: var(--muted); line-height: 2.1; }
     .story-box .hl { color: var(--text); font-weight: 500; }
     .story-box .ac { color: var(--gold); }
 
-    /* ── VIDEO ── */
     .video-wrap { text-align: center; }
-    .video-wrap iframe {
-      border: 1px solid var(--border);
-      max-width: 100%;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
-    }
+    .video-wrap iframe { border: 1px solid var(--border); max-width: 100%; box-shadow: 0 20px 70px rgba(0,0,0,0.55); }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 48px 24px;
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      color: var(--gold);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    footer p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 1.5px;
-    }
+    footer { background: var(--navy); border-top: 1px solid var(--border); text-align: center; padding: 48px 24px; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
+    footer p { font-size: 0.78rem; color: var(--muted); letter-spacing: 1.5px; }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <ul>
     <li><a href="index.html" class="active">Home</a></li>
@@ -340,16 +128,12 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
     <p class="eyebrow">Australia &nbsp;·&nbsp; Family Travel &nbsp;·&nbsp; 2026</p>
     <h1>우리 가족의<br>호주 여행</h1>
-    <p class="hero-sub">
-      시드니의 밤, 울루루의 석양,<br>
-      그레이트 배리어 리프의 푸른 바다까지
-    </p>
+    <p class="hero-sub">시드니의 밤, 울루루의 석양,<br>그레이트 배리어 리프의 푸른 바다까지</p>
     <a href="#family" class="btn-outline">여행 이야기 보기</a>
   </div>
   <div class="scroll-hint">Scroll</div>
@@ -357,7 +141,6 @@
 
 <main>
 
-  <!-- 가족 소개 -->
   <section id="family">
     <div class="sec-head">
       <p class="eyebrow">Our Family</p>
@@ -368,7 +151,7 @@
 
       <a class="member-card" href="3.html">
         <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=600&q=80" alt="시드니 오페라 하우스" onerror="this.style.display='none'">
+          <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=600&q=80" alt="시드니" onerror="this.style.display='none'">
           <div class="card-img-overlay"></div>
         </div>
         <div class="card-body">
@@ -417,7 +200,6 @@
     </div>
   </section>
 
-  <!-- 주요 관광지 -->
   <section>
     <div class="sec-head">
       <p class="eyebrow">Destinations</p>
@@ -429,61 +211,42 @@
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80" alt="시드니 오페라 하우스" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>Sydney Opera House</strong>
-          <span>시드니 오페라 하우스</span>
-        </div>
+        <div class="dest-caption"><strong>Sydney Opera House</strong><span>시드니 오페라 하우스</span></div>
       </div>
 
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80" alt="울루루" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>Uluru</strong>
-          <span>울루루 — 에어즈 록</span>
-        </div>
+        <div class="dest-caption"><strong>Uluru</strong><span>울루루 — 에어즈 록</span></div>
       </div>
 
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80" alt="그레이트 배리어 리프" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>Great Barrier Reef</strong>
-          <span>그레이트 배리어 리프</span>
-        </div>
+        <div class="dest-caption"><strong>Great Barrier Reef</strong><span>그레이트 배리어 리프</span></div>
       </div>
 
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80" alt="12사도 바위" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>The Twelve Apostles</strong>
-          <span>그레이트 오션 로드</span>
-        </div>
+        <div class="dest-caption"><strong>The Twelve Apostles</strong><span>그레이트 오션 로드</span></div>
       </div>
 
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1deae?auto=format&fit=crop&w=800&q=80" alt="본다이 비치" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>Bondi Beach</strong>
-          <span>본다이 비치 · 시드니</span>
-        </div>
+        <div class="dest-caption"><strong>Bondi Beach</strong><span>본다이 비치 · 시드니</span></div>
       </div>
 
       <div class="dest-item">
         <img src="https://images.unsplash.com/photo-1433838552652-f9a586b602c7?auto=format&fit=crop&w=800&q=80" alt="블루 마운틴" onerror="this.style.display='none'">
         <div class="dest-overlay"></div>
-        <div class="dest-caption">
-          <strong>Blue Mountains</strong>
-          <span>블루 마운틴 · NSW</span>
-        </div>
+        <div class="dest-caption"><strong>Blue Mountains</strong><span>블루 마운틴 · NSW</span></div>
       </div>
 
     </div>
   </section>
 
-  <!-- 여행 이야기 -->
   <section>
     <div class="sec-head">
       <p class="eyebrow">Our Story</p>
@@ -502,7 +265,6 @@
     </div>
   </section>
 
-  <!-- 유튜브 -->
   <section>
     <div class="sec-head">
       <p class="eyebrow">Memory</p>
