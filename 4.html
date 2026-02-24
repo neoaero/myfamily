@@ -1,22 +1,241 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset ="utf-8" />
-<title>
-  My Famaily
-</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>윤경 — 우리 가족</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif;
+      background: #fdf6f0;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffecd2);
+      text-align: center;
+      padding: 40px 20px 30px;
+    }
+    header h1 a {
+      font-size: 2rem;
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 3px;
+    }
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav ul li a {
+      display: block;
+      padding: 14px 24px;
+      text-decoration: none;
+      color: #555;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      background: #ff9a9e;
+      color: #fff;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+    .profile-hero {
+      display: flex;
+      gap: 36px;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+      margin-bottom: 40px;
+    }
+    @media (max-width: 580px) {
+      .profile-hero { flex-direction: column; align-items: center; text-align: center; }
+    }
+    .profile-photo {
+      flex-shrink: 0;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .profile-placeholder {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffe0e8, #fce4ec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .profile-placeholder span {
+      font-size: 0.78rem;
+      color: #b0757e;
+      margin-top: 6px;
+    }
+    .profile-info h2 {
+      font-size: 2.4rem;
+      color: #d45f7a;
+      margin-bottom: 8px;
+    }
+    .profile-info .role-badge {
+      display: inline-block;
+      background: #ffe0e8;
+      color: #d45f7a;
+      border-radius: 20px;
+      padding: 4px 18px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+    .profile-info .desc {
+      font-size: 1.05rem;
+      color: #666;
+      line-height: 1.8;
+    }
+    .photo-gallery h2 {
+      font-size: 1.4rem;
+      color: #d45f7a;
+      border-left: 5px solid #ff9a9e;
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 500px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-placeholder {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, #fce4ec, #ffe8d6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #c09090;
+      font-size: 2rem;
+    }
+    .gallery-placeholder span { font-size: 0.75rem; margin-top: 5px; color: #b08080; }
+    .gallery-label {
+      background: #333;
+      color: #eee;
+      text-align: center;
+      padding: 5px;
+      font-size: 0.8rem;
+    }
+    footer {
+      background: #333;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.82rem;
+      margin-top: 60px;
+    }
+  </style>
 </head>
 <body>
-  <h1><a href="index.html">My Famaily</a></h1>
+
+<header>
+  <h1><a href="index.html">🏠 우리 가족</a></h1>
+</header>
+
+<nav>
   <ul>
-    <h1><li><a href="1.html">태을</a></li></h1>
-    <h1><li><a href="2.html">지호</a></li></h1>
-    <h1><li><a href="3.html">영현</a></li></h1>
-    <h1><li><a href="4.html">윤경</a></li></h1>
+    <li><a href="index.html">홈</a></li>
+    <li><a href="1.html">태을 (아들)</a></li>
+    <li><a href="2.html">지호 (딸)</a></li>
+    <li><a href="3.html">영현 (아빠)</a></li>
+    <li><a href="4.html" class="active">윤경 (엄마)</a></li>
   </ul>
-  <p>
-<h1>윤경</h1>
-  <h1>  엄마입니다. 잠을 많이 자서 그런지 이뻐요^^</h1>
-  </P>
+</nav>
+
+<main>
+
+  <div class="profile-hero">
+    <!-- 엄마 사진: mom.jpg로 저장 후 아래 두 줄 교체 -->
+    <!-- <div class="profile-photo"><img src="mom.jpg" alt="윤경"></div> -->
+    <div class="profile-placeholder">👩<span>엄마 사진</span></div>
+    <div class="profile-info">
+      <h2>윤경</h2>
+      <div class="role-badge">엄마</div>
+      <p class="desc">
+        잠을 많이 자서 그런지 이뻐요 ^^ 😴<br>
+        가족 모두를 사랑으로 보살피는<br>
+        우리 가족의 소중한 엄마예요.
+      </p>
+    </div>
+  </div>
+
+  <div class="photo-gallery">
+    <h2>📷 윤경의 사진</h2>
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <!-- <img src="mom_1.jpg" alt="엄마 사진 1"> -->
+        <div class="gallery-placeholder">😊<span>사진 1</span></div>
+        <div class="gallery-label">일상 사진</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="mom_2.jpg" alt="엄마 아이들과"> -->
+        <div class="gallery-placeholder">👩‍👧‍👦<span>사진 2</span></div>
+        <div class="gallery-label">아이들과 함께</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="mom_3.jpg" alt="엄마 가족과"> -->
+        <div class="gallery-placeholder">👨‍👩‍👧‍👦<span>사진 3</span></div>
+        <div class="gallery-label">가족과 함께</div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 나노바나나 가족 홈페이지 &nbsp;|&nbsp; 행복한 우리 가족 💕
+</footer>
+
 </body>
 </html>

@@ -1,27 +1,414 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset ="utf-8" />
-<title>
-  My Famaily
-</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 가족 홈페이지</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif;
+      background: #fdf6f0;
+      color: #333;
+    }
+
+    /* 헤더 */
+    header {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffecd2);
+      text-align: center;
+      padding: 50px 20px 40px;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      color: #fff;
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 4px;
+    }
+    header p.subtitle {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* 네비게이션 */
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+    nav ul li a {
+      display: block;
+      padding: 16px 28px;
+      text-decoration: none;
+      color: #555;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav ul li a:hover {
+      background: #ff9a9e;
+      color: #fff;
+    }
+
+    /* 메인 콘텐츠 */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* 섹션 공통 */
+    section {
+      margin-bottom: 60px;
+    }
+    section h2 {
+      font-size: 1.7rem;
+      color: #d45f7a;
+      border-left: 5px solid #ff9a9e;
+      padding-left: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* 단체 사진 히어로 */
+    .hero-photo {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      margin-bottom: 20px;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-caption {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #888;
+      margin-top: -10px;
+      margin-bottom: 30px;
+    }
+
+    /* 가족 소개 카드 그리드 */
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .family-grid { grid-template-columns: repeat(2, 1fr); }
+      header h1 { font-size: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .family-grid { grid-template-columns: 1fr; }
+    }
+
+    .member-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .member-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.14);
+    }
+    .member-card .photo {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      background: #f0e0e8;
+    }
+    .member-card .photo-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #c48099;
+      font-size: 3rem;
+    }
+    .member-card .photo-placeholder span {
+      font-size: 0.85rem;
+      margin-top: 8px;
+      color: #b0757e;
+    }
+    .member-card .card-body {
+      padding: 16px;
+      text-align: center;
+    }
+    .member-card .card-name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .member-card .card-role {
+      display: inline-block;
+      margin-top: 6px;
+      background: #ffe0e8;
+      color: #d45f7a;
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    .member-card .card-desc {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    /* 갤러리 */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-placeholder {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #fce4ec, #e8d5f5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #b090b8;
+      font-size: 2.2rem;
+    }
+    .gallery-placeholder span {
+      font-size: 0.78rem;
+      margin-top: 6px;
+      color: #a080b0;
+    }
+    .gallery-label {
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.82rem;
+    }
+
+    /* 소개 글 */
+    .intro-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px 36px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #555;
+      text-align: center;
+    }
+    .intro-box .heart { color: #e05070; }
+
+    /* 유튜브 */
+    .video-wrap {
+      text-align: center;
+    }
+    .video-wrap iframe {
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      max-width: 100%;
+    }
+
+    /* 푸터 */
+    footer {
+      background: #333;
+      color: #aaa;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
 <body>
-  <h1><a href="index.html">My Famaily</a></h1>
+
+<header>
+  <h1>🏠 우리 가족</h1>
+  <p class="subtitle">나노바나나 가족의 행복한 이야기</p>
+</header>
+
+<nav>
   <ul>
-    <h1><li><a href="1.html">태을</a></li></h1>
-    <h1><li><a href="2.html">지호</a></li></h1>
-    <h1><li><a href="3.html">영현</a></li></h1>
-    <h1><li><a href="4.html">윤경</a></li></h1>
+    <li><a href="index.html">홈</a></li>
+    <li><a href="1.html">태을 (아들)</a></li>
+    <li><a href="2.html">지호 (딸)</a></li>
+    <li><a href="3.html">영현 (아빠)</a></li>
+    <li><a href="4.html">윤경 (엄마)</a></li>
   </ul>
-  <p>
-    <h1><br>우리 가족은 4명이구요. 행복합니다</br></h1>
-  </P>
-  <p style="margin-top:45px;">
-    <h1>우리집에 많이 놀러 오세요!!</h1>
-  </P>
-<p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/MBdVXkSdhwU" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-</p>
+</nav>
+
+<main>
+
+  <!-- 단체 사진 -->
+  <section>
+    <h2>📸 우리 가족 단체사진</h2>
+    <div class="hero-photo">
+      <!-- 나노바나나에서 생성한 단체사진을 family_main.jpg로 저장 후 아래 img 태그의 주석을 해제하세요 -->
+      <!-- <img src="family_main.jpg" alt="가족 단체사진"> -->
+      <img src="sun.jpg" alt="가족 단체사진">
+    </div>
+    <p class="hero-caption">행복한 우리 가족 💕</p>
+  </section>
+
+  <!-- 가족 소개 카드 -->
+  <section>
+    <h2>👨‍👩‍👧‍👦 가족 소개</h2>
+    <div class="family-grid">
+
+      <a class="member-card" href="3.html">
+        <!-- 아빠 사진: dad.jpg로 저장 후 아래 두 줄을 교체하세요 -->
+        <!-- <img class="photo" src="dad.jpg" alt="아빠 영현"> -->
+        <div class="photo-placeholder">👨<span>아빠 사진</span></div>
+        <div class="card-body">
+          <div class="card-name">영현</div>
+          <div class="card-role">아빠</div>
+          <p class="card-desc">좀 뚱뚱하긴 하지만 잘생겼어요 ^^</p>
+        </div>
+      </a>
+
+      <a class="member-card" href="4.html">
+        <!-- 엄마 사진: mom.jpg로 저장 후 아래 두 줄을 교체하세요 -->
+        <!-- <img class="photo" src="mom.jpg" alt="엄마 윤경"> -->
+        <div class="photo-placeholder">👩<span>엄마 사진</span></div>
+        <div class="card-body">
+          <div class="card-name">윤경</div>
+          <div class="card-role">엄마</div>
+          <p class="card-desc">잠을 많이 자서 그런지 이뻐요 ^^</p>
+        </div>
+      </a>
+
+      <a class="member-card" href="2.html">
+        <!-- 딸 사진: daughter.jpg로 저장 후 아래 두 줄을 교체하세요 -->
+        <!-- <img class="photo" src="daughter.jpg" alt="딸 지호"> -->
+        <div class="photo-placeholder">👧<span>지호 사진</span></div>
+        <div class="card-body">
+          <div class="card-name">지호</div>
+          <div class="card-role">딸</div>
+          <p class="card-desc">이쁘고 노래를 잘 불러요</p>
+        </div>
+      </a>
+
+      <a class="member-card" href="1.html">
+        <!-- 아들 사진: son.jpg로 저장 후 아래 두 줄을 교체하세요 -->
+        <!-- <img class="photo" src="son.jpg" alt="아들 태을"> -->
+        <div class="photo-placeholder">👦<span>태을 사진</span></div>
+        <div class="card-body">
+          <div class="card-name">태을</div>
+          <div class="card-role">아들</div>
+          <p class="card-desc">잘생겼고 만들기를 잘해요</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 가족 갤러리 -->
+  <section>
+    <h2>🖼️ 가족 앨범</h2>
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <!-- <img src="family_picnic.jpg" alt="소풍"> -->
+        <div class="gallery-placeholder">🌸<span>소풍 사진</span></div>
+        <div class="gallery-label">봄 소풍</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="family_beach.jpg" alt="바다"> -->
+        <div class="gallery-placeholder">🏖️<span>여름 바다</span></div>
+        <div class="gallery-label">여름 바다 여행</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="family_autumn.jpg" alt="단풍"> -->
+        <div class="gallery-placeholder">🍁<span>단풍 나들이</span></div>
+        <div class="gallery-label">가을 단풍 나들이</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="family_christmas.jpg" alt="크리스마스"> -->
+        <div class="gallery-placeholder">🎄<span>크리스마스</span></div>
+        <div class="gallery-label">크리스마스</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="family_birthday.jpg" alt="생일"> -->
+        <div class="gallery-placeholder">🎂<span>생일 파티</span></div>
+        <div class="gallery-label">생일 파티</div>
+      </div>
+
+      <div class="gallery-item">
+        <!-- <img src="family_newyear.jpg" alt="새해"> -->
+        <div class="gallery-placeholder">🎆<span>새해 첫날</span></div>
+        <div class="gallery-label">새해 첫날</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 가족 소개 글 -->
+  <section>
+    <h2>💬 우리 가족 이야기</h2>
+    <div class="intro-box">
+      우리 가족은 총 4명이에요. <span class="heart">♥</span><br>
+      아빠 <strong>영현</strong>, 엄마 <strong>윤경</strong>,<br>
+      딸 <strong>지호</strong>, 아들 <strong>태을</strong>이 함께 살고 있어요.<br><br>
+      서로 사랑하고 응원하는 행복한 가족입니다. <span class="heart">♥</span><br>
+      우리집에 많이 놀러 오세요!
+    </div>
+  </section>
+
+  <!-- 유튜브 영상 -->
+  <section>
+    <h2>🎬 우리 가족의 노래</h2>
+    <div class="video-wrap">
+      <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/MBdVXkSdhwU"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 나노바나나 가족 홈페이지 &nbsp;|&nbsp; 행복한 우리 가족 💕
+</footer>
+
 </body>
 </html>
