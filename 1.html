@@ -1,241 +1,391 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>태을 — 우리 가족</title>
+  <title>태을 — 나노바나나 가족의 호주 여행</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif;
-      background: #fdf6f0;
-      color: #333;
+    :root {
+      --accent: #1565C0;
+      --accent-light: #E3F2FD;
+      --navy: #1a2a4a;
+      --gold: #E9C46A;
+      --sand: #F8F3E8;
+      --text: #2c3e50;
+      --coral: #E76F51;
     }
-    header {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffecd2);
-      text-align: center;
-      padding: 40px 20px 30px;
-    }
-    header h1 a {
-      font-size: 2rem;
-      color: #fff;
-      text-decoration: none;
-      text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
-      letter-spacing: 3px;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: var(--sand); color: var(--text); }
+
+    /* NAV */
     nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(26,42,74,0.96); backdrop-filter: blur(8px);
+      border-bottom: 2px solid rgba(233,196,106,0.35);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; height: 62px;
+    }
+    .nav-logo { font-size: 1.2rem; font-weight: 900; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; list-style: none; gap: 4px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      padding: 7px 14px; border-radius: 20px; font-size: 0.88rem; transition: all 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(233,196,106,0.25); color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      height: 60vh; min-height: 400px;
+      position: relative; display: flex; align-items: flex-end; justify-content: flex-start;
+      background-color: #0d3b72; overflow: hidden; padding-bottom: 48px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1400&q=80');
+      background-size: cover; background-position: center top;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(13,59,114,0.75) 0%, rgba(13,59,114,0.4) 60%, transparent 100%);
+    }
+    .hero-text { position: relative; padding: 0 40px; animation: fadeUp 0.9s ease both; }
+    .hero-text .member-emoji { font-size: 3rem; margin-bottom: 8px; }
+    .hero-text h1 { font-size: clamp(2rem,4vw,3.2rem); font-weight: 900; color: #fff; text-shadow: 2px 3px 10px rgba(0,0,0,0.5); margin-bottom: 8px; }
+    .hero-text .role { display: inline-block; background: var(--accent); color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; }
+    .hero-text .tagline { font-size: 1rem; color: rgba(255,255,255,0.88); }
+
+    /* CONTENT */
+    .content { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+
+    /* PROFILE CARD */
+    .profile-card {
+      background: #fff; border-radius: 20px; padding: 36px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.09); margin-bottom: 48px;
+      display: flex; gap: 32px; align-items: flex-start;
+    }
+    .profile-avatar {
+      width: 160px; height: 160px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #1565C0, #42A5F5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; box-shadow: 0 6px 20px rgba(21,101,192,0.3);
+    }
+    .profile-info h2 { font-size: 2rem; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+    .profile-info .desc { font-size: 1rem; color: #666; line-height: 1.9; }
+
+    /* AU SECTIONS */
+    .au-section { margin-bottom: 48px; }
+    .au-section-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      padding-bottom: 12px; border-bottom: 3px solid var(--accent-light);
+    }
+    .au-section-header h2 { font-size: 1.4rem; font-weight: 900; color: var(--navy); }
+    .au-section-header .sec-icon { font-size: 1.8rem; }
+
+    .au-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .au-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .au-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.13); }
+    .au-card-img {
+      height: 150px; background-size: cover; background-position: center; background-color: #1a3a6c;
+    }
+    .au-card-body { padding: 14px 16px; }
+    .au-card-body h3 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .au-card-body p { font-size: 0.82rem; color: #666; line-height: 1.55; }
+    .au-card-rank {
+      display: inline-block; background: var(--accent); color: #fff;
+      width: 24px; height: 24px; border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+    }
+
+    /* COMMENT SECTION */
+    .comment-sec { background: #fff; border-radius: 20px; padding: 36px; box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+    .comment-sec-title {
+      font-size: 1.4rem; font-weight: 900; color: var(--navy);
+      margin-bottom: 24px; padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent-light);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .comment-form { background: var(--sand); border-radius: 14px; padding: 24px; margin-bottom: 28px; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .form-row input, .form-row textarea {
+      width: 100%; padding: 10px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+      font-family: inherit; font-size: 0.93rem; transition: border-color 0.25s; resize: vertical;
       background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+    .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+    .submit-btn {
+      background: var(--accent); color: #fff; border: none;
+      padding: 11px 28px; border-radius: 25px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
     }
-    nav ul li a {
-      display: block;
-      padding: 14px 24px;
-      text-decoration: none;
-      color: #555;
-      font-weight: bold;
-      font-size: 0.95rem;
-      transition: background 0.2s, color 0.2s;
+    .submit-btn:hover { background: #0d47a1; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(21,101,192,0.35); }
+    .comment-list { display: flex; flex-direction: column; gap: 14px; }
+    .comment-card {
+      background: var(--sand); border-radius: 14px; padding: 18px 20px;
+      border-left: 4px solid var(--accent);
     }
-    nav ul li a:hover, nav ul li a.active {
-      background: #ff9a9e;
-      color: #fff;
+    .comment-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .comment-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #42A5F5);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
     }
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 50px 20px;
-    }
-    .profile-hero {
-      display: flex;
-      gap: 36px;
-      align-items: flex-start;
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
-      margin-bottom: 40px;
-    }
-    @media (max-width: 580px) {
-      .profile-hero { flex-direction: column; align-items: center; text-align: center; }
-    }
-    .profile-photo {
-      flex-shrink: 0;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    }
-    .profile-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .profile-placeholder {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ffe0e8, #fce4ec);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-      flex-shrink: 0;
-    }
-    .profile-placeholder span {
-      font-size: 0.78rem;
-      color: #b0757e;
-      margin-top: 6px;
-    }
-    .profile-info h2 {
-      font-size: 2.4rem;
-      color: #d45f7a;
-      margin-bottom: 8px;
-    }
-    .profile-info .role-badge {
-      display: inline-block;
-      background: #ffe0e8;
-      color: #d45f7a;
-      border-radius: 20px;
-      padding: 4px 18px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin-bottom: 16px;
-    }
-    .profile-info .desc {
-      font-size: 1.05rem;
-      color: #666;
-      line-height: 1.8;
-    }
-    .photo-gallery h2 {
-      font-size: 1.4rem;
-      color: #d45f7a;
-      border-left: 5px solid #ff9a9e;
-      padding-left: 12px;
-      margin-bottom: 20px;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 500px) {
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    .gallery-item {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-placeholder {
-      width: 100%;
-      height: 150px;
-      background: linear-gradient(135deg, #fce4ec, #ffe8d6);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #c09090;
-      font-size: 2rem;
-    }
-    .gallery-placeholder span { font-size: 0.75rem; margin-top: 5px; color: #b08080; }
-    .gallery-label {
-      background: #333;
-      color: #eee;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.8rem;
-    }
+    .comment-author { font-weight: 800; font-size: 0.95rem; color: var(--navy); }
+    .comment-date { font-size: 0.78rem; color: #999; margin-left: auto; }
+    .comment-message { font-size: 0.92rem; color: #555; line-height: 1.65; }
+    .no-comments { text-align: center; color: #999; font-size: 0.95rem; padding: 30px 0; }
+
+    /* FOOTER */
     footer {
-      background: #333;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.82rem;
-      margin-top: 60px;
+      background: var(--navy); color: rgba(255,255,255,0.65);
+      text-align: center; padding: 40px 24px;
+      border-top: 2px solid rgba(233,196,106,0.3);
+    }
+    footer a { color: var(--gold); text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .profile-card { flex-direction: column; align-items: center; text-align: center; }
+      .au-cards { grid-template-columns: 1fr 1fr; }
+      .hero-text { padding: 0 20px; }
+    }
+    @media (max-width: 480px) {
+      .content { padding: 40px 16px; }
+      .au-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1><a href="index.html">🏠 우리 가족</a></h1>
-</header>
-
+<!-- NAV -->
 <nav>
-  <ul>
-    <li><a href="index.html">홈</a></li>
-    <li><a href="1.html" class="active">태을 (아들)</a></li>
-    <li><a href="2.html">지호 (딸)</a></li>
-    <li><a href="3.html">영현 (아빠)</a></li>
-    <li><a href="4.html">윤경 (엄마)</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🦘 나노바나나 가족</a>
+    <ul class="nav-links">
+      <li><a href="1.html" class="active">👦 태을</a></li>
+      <li><a href="2.html">👧 지호</a></li>
+      <li><a href="3.html">👨 영현</a></li>
+      <li><a href="4.html">👩 윤경</a></li>
+    </ul>
+  </div>
 </nav>
 
-<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="member-emoji">👦</div>
+    <h1>태을의 호주 이야기</h1>
+    <div class="role">아들 · 만들기 장인</div>
+    <p class="tagline">🌉 시드니 하버 브리지에 완전 반했어요!</p>
+  </div>
+</section>
 
-  <div class="profile-hero">
-    <!-- 태을 사진: son.jpg로 저장 후 아래 두 줄 교체 -->
-    <!-- <div class="profile-photo"><img src="son.jpg" alt="태을"></div> -->
-    <div class="profile-placeholder">👦<span>태을 사진</span></div>
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <div class="profile-avatar">👦</div>
     <div class="profile-info">
-      <h2>태을</h2>
-      <div class="role-badge">아들</div>
+      <h2>태을 🛠️</h2>
       <p class="desc">
-        잘생겼고 만들기를 잘해요! 🛠️<br>
-        손재주가 뛰어나고 뭐든 뚝딱뚝딱 만들어내는<br>
-        우리 집 아들이에요.
+        잘생겼고 만들기를 잘해요! 손재주가 뛰어나서 뭐든 뚝딱뚝딱 만들어내는 우리 집 아들이에요.<br><br>
+        호주에서는 특히 거대한 건축물과 구조물에 매료됐어요. 시드니 하버 브리지를 보고 "어떻게 이걸 만들었지?!" 하면서 너무 신기해했답니다. 🌉
       </p>
     </div>
   </div>
 
-  <div class="photo-gallery">
-    <h2>📷 태을의 사진</h2>
-    <div class="gallery-grid">
-
-      <div class="gallery-item">
-        <!-- <img src="son_1.jpg" alt="태을 사진 1"> -->
-        <div class="gallery-placeholder">😊<span>사진 1</span></div>
-        <div class="gallery-label">일상 사진</div>
+  <!-- SPOTS -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🗺️</span>
+      <h2>태을이 좋아한 관광지 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>🌉 시드니 하버 브리지</h3>
+          <p>어떻게 이 엄청난 다리를 만들었는지 너무 신기했어요! 만들기를 좋아하는 태을이에게 완전 최고의 명소!</p>
+        </div>
       </div>
-
-      <div class="gallery-item">
-        <!-- <img src="son_2.jpg" alt="태을 만들기"> -->
-        <div class="gallery-placeholder">🛠️<span>사진 2</span></div>
-        <div class="gallery-label">만들기 시간</div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1529090253395-04b23a16a244?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>🪨 울루루</h3>
+          <p>자연이 수백만 년에 걸쳐 만든 거대한 조각품! 이 어마어마한 돌덩이가 어떻게 생겼는지 신기했어요.</p>
+        </div>
       </div>
-
-      <div class="gallery-item">
-        <!-- <img src="son_3.jpg" alt="태을 가족과"> -->
-        <div class="gallery-placeholder">👨‍👩‍👦<span>사진 3</span></div>
-        <div class="gallery-label">가족과 함께</div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>🚢 달링 하버</h3>
+          <p>배랑 크레인이 많아서 너무 좋았어요! 항구의 큰 기계들을 보면서 나도 저런 걸 만들고 싶었어요.</p>
+        </div>
       </div>
-
     </div>
   </div>
 
-</main>
+  <!-- ANIMALS -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🦘</span>
+      <h2>태을이 좋아한 동물 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1595503240812-7286dafaddc1?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>🦘 캥거루</h3>
+          <p>강하고 빠른 모습이 정말 멋있어요! 복싱하는 캥거루를 봤는데 진짜 웃기면서도 대단했어요.</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>🐦 에뮤</h3>
+          <p>날지도 못하는데 달리기는 엄청 빠른 새! 독특하고 재미있는 호주만의 특별한 새예요.</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1510771463146-e89e6e86560e?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>🐨 코알라</h3>
+          <p>나무에 딱 달라붙어서 잠만 자는 모습이 신기했어요. 근데 안고 싶었는데 못 안았어요… 😅</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- FOOD -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🍽️</span>
+      <h2>태을이 좋아한 음식 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>🍫 팀탐</h3>
+          <p>호주 국민 초콜릿 비스킷! 달콤하고 바삭해서 한 봉지를 순식간에 다 먹었어요. 한국에서도 팔면 좋겠다!</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1565299715199-866c917206bb?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>🥧 치킨 파이</h3>
+          <p>바삭한 겉皮에 든든한 속 재료! 호주식 고기 파이는 진짜 맛있어요. 운동 후에 먹으면 최고!</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>🍖 호주 바베큐</h3>
+          <p>공원 곳곳에 무료 바베큐 그릴이 있어서 가족이랑 직접 구워 먹었어요! 역시 BBQ는 야외에서!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="comment-sec">
+    <div class="comment-sec-title">
+      <span>💬</span> 태을에게 남기는 가족 댓글
+    </div>
+
+    <div class="comment-form">
+      <div class="form-row">
+        <label>이름 ✍️</label>
+        <input type="text" id="cname" placeholder="예: 엄마, 지호, 아빠...">
+      </div>
+      <div class="form-row">
+        <label>태을에게 하고 싶은 말 💬</label>
+        <textarea id="cmsg" rows="4" placeholder="태을에게 응원 메시지나 인사를 남겨주세요!"></textarea>
+      </div>
+      <button class="submit-btn" onclick="addComment()">댓글 남기기 🌏</button>
+    </div>
+
+    <div id="comment-list" class="comment-list"></div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
 <footer>
-  &copy; 나노바나나 가족 홈페이지 &nbsp;|&nbsp; 행복한 우리 가족 💕
+  <p style="margin-bottom:10px;">🦘 나노바나나 가족의 호주 여행 이야기</p>
+  <p>
+    <a href="index.html">🏠 홈</a> ·
+    <a href="2.html">👧 지호</a> ·
+    <a href="3.html">👨 영현</a> ·
+    <a href="4.html">👩 윤경</a>
+  </p>
 </footer>
 
+<script>
+  const STORE = 'nanobana_comments_1';
+  const EMOJIS = ['🦘','🐨','🌊','☀️','🌺','✈️','💝','🦜','🎭','🍫'];
+
+  function save(list) { localStorage.setItem(STORE, JSON.stringify(list)); }
+  function load() { return JSON.parse(localStorage.getItem(STORE) || '[]'); }
+  function esc(s) { const d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+  function render() {
+    const list = load();
+    const el = document.getElementById('comment-list');
+    if (!list.length) {
+      el.innerHTML = '<p class="no-comments">🌟 아직 댓글이 없어요. 첫 댓글을 남겨주세요!</p>';
+      return;
+    }
+    el.innerHTML = list.map(c => `
+      <div class="comment-card">
+        <div class="comment-card-header">
+          <div class="comment-avatar">${c.emoji}</div>
+          <span class="comment-author">${esc(c.author)}</span>
+          <span class="comment-date">${c.date}</span>
+        </div>
+        <p class="comment-message">${esc(c.msg)}</p>
+      </div>`).join('');
+  }
+
+  function addComment() {
+    const author = document.getElementById('cname').value.trim();
+    const msg    = document.getElementById('cmsg').value.trim();
+    if (!author || !msg) { alert('이름과 메시지를 모두 입력해주세요! 🥺'); return; }
+    const list = load();
+    list.unshift({
+      author, msg,
+      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+      date: new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' })
+    });
+    save(list);
+    document.getElementById('cname').value = '';
+    document.getElementById('cmsg').value = '';
+    render();
+    document.getElementById('comment-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  render();
+</script>
 </body>
 </html>

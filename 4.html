@@ -1,241 +1,384 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>윤경 — 우리 가족</title>
+  <title>윤경 — 나노바나나 가족의 호주 여행</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif;
-      background: #fdf6f0;
-      color: #333;
+    :root {
+      --accent: #6A1B9A;
+      --accent-light: #F3E5F5;
+      --navy: #1a2a4a;
+      --gold: #E9C46A;
+      --sand: #F8F3E8;
+      --text: #2c3e50;
     }
-    header {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffecd2);
-      text-align: center;
-      padding: 40px 20px 30px;
-    }
-    header h1 a {
-      font-size: 2rem;
-      color: #fff;
-      text-decoration: none;
-      text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
-      letter-spacing: 3px;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: var(--sand); color: var(--text); }
+
+    /* NAV */
     nav {
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(26,42,74,0.96); backdrop-filter: blur(8px);
+      border-bottom: 2px solid rgba(233,196,106,0.35);
     }
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; height: 62px;
     }
-    nav ul li a {
-      display: block;
-      padding: 14px 24px;
-      text-decoration: none;
-      color: #555;
-      font-weight: bold;
-      font-size: 0.95rem;
-      transition: background 0.2s, color 0.2s;
+    .nav-logo { font-size: 1.2rem; font-weight: 900; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; list-style: none; gap: 4px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      padding: 7px 14px; border-radius: 20px; font-size: 0.88rem; transition: all 0.25s;
     }
-    nav ul li a:hover, nav ul li a.active {
-      background: #ff9a9e;
-      color: #fff;
+    .nav-links a:hover, .nav-links a.active { background: rgba(233,196,106,0.25); color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      height: 60vh; min-height: 400px;
+      position: relative; display: flex; align-items: flex-end; justify-content: flex-start;
+      background-color: #3a1a5c; overflow: hidden; padding-bottom: 48px;
     }
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 50px 20px;
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=1400&q=80');
+      background-size: cover; background-position: center;
     }
-    .profile-hero {
-      display: flex;
-      gap: 36px;
-      align-items: flex-start;
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
-      margin-bottom: 40px;
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(58,26,92,0.8) 0%, rgba(58,26,92,0.4) 60%, transparent 100%);
     }
-    @media (max-width: 580px) {
-      .profile-hero { flex-direction: column; align-items: center; text-align: center; }
+    .hero-text { position: relative; padding: 0 40px; animation: fadeUp 0.9s ease both; }
+    .hero-text .member-emoji { font-size: 3rem; margin-bottom: 8px; }
+    .hero-text h1 { font-size: clamp(2rem,4vw,3.2rem); font-weight: 900; color: #fff; text-shadow: 2px 3px 10px rgba(0,0,0,0.5); margin-bottom: 8px; }
+    .hero-text .role { display: inline-block; background: var(--accent); color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; }
+    .hero-text .tagline { font-size: 1rem; color: rgba(255,255,255,0.88); }
+
+    /* CONTENT */
+    .content { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+
+    /* PROFILE CARD */
+    .profile-card {
+      background: #fff; border-radius: 20px; padding: 36px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.09); margin-bottom: 48px;
+      display: flex; gap: 32px; align-items: flex-start;
     }
-    .profile-photo {
-      flex-shrink: 0;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    .profile-avatar {
+      width: 160px; height: 160px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #6A1B9A, #AB47BC);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; box-shadow: 0 6px 20px rgba(106,27,154,0.3);
     }
-    .profile-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .profile-info h2 { font-size: 2rem; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+    .profile-info .desc { font-size: 1rem; color: #666; line-height: 1.9; }
+
+    /* AU SECTIONS */
+    .au-section { margin-bottom: 48px; }
+    .au-section-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      padding-bottom: 12px; border-bottom: 3px solid var(--accent-light);
     }
-    .profile-placeholder {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ffe0e8, #fce4ec);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-      flex-shrink: 0;
+    .au-section-header h2 { font-size: 1.4rem; font-weight: 900; color: var(--navy); }
+    .au-section-header .sec-icon { font-size: 1.8rem; }
+
+    .au-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .au-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s;
     }
-    .profile-placeholder span {
-      font-size: 0.78rem;
-      color: #b0757e;
-      margin-top: 6px;
+    .au-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.13); }
+    .au-card-img { height: 150px; background-size: cover; background-position: center; background-color: #3a1a5c; }
+    .au-card-body { padding: 14px 16px; }
+    .au-card-body h3 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .au-card-body p { font-size: 0.82rem; color: #666; line-height: 1.55; }
+    .au-card-rank {
+      width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff;
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
     }
-    .profile-info h2 {
-      font-size: 2.4rem;
-      color: #d45f7a;
-      margin-bottom: 8px;
+
+    /* COMMENT SECTION */
+    .comment-sec { background: #fff; border-radius: 20px; padding: 36px; box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+    .comment-sec-title {
+      font-size: 1.4rem; font-weight: 900; color: var(--navy);
+      margin-bottom: 24px; padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent-light);
+      display: flex; align-items: center; gap: 10px;
     }
-    .profile-info .role-badge {
-      display: inline-block;
-      background: #ffe0e8;
-      color: #d45f7a;
-      border-radius: 20px;
-      padding: 4px 18px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin-bottom: 16px;
+    .comment-form { background: var(--sand); border-radius: 14px; padding: 24px; margin-bottom: 28px; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .form-row input, .form-row textarea {
+      width: 100%; padding: 10px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+      font-family: inherit; font-size: 0.93rem; transition: border-color 0.25s; resize: vertical; background: #fff;
     }
-    .profile-info .desc {
-      font-size: 1.05rem;
-      color: #666;
-      line-height: 1.8;
+    .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+    .submit-btn {
+      background: var(--accent); color: #fff; border: none;
+      padding: 11px 28px; border-radius: 25px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
     }
-    .photo-gallery h2 {
-      font-size: 1.4rem;
-      color: #d45f7a;
-      border-left: 5px solid #ff9a9e;
-      padding-left: 12px;
-      margin-bottom: 20px;
+    .submit-btn:hover { background: #4a148c; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(106,27,154,0.35); }
+    .comment-list { display: flex; flex-direction: column; gap: 14px; }
+    .comment-card { background: var(--sand); border-radius: 14px; padding: 18px 20px; border-left: 4px solid var(--accent); }
+    .comment-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .comment-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #AB47BC);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
     }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 500px) {
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    .gallery-item {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-placeholder {
-      width: 100%;
-      height: 150px;
-      background: linear-gradient(135deg, #fce4ec, #ffe8d6);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #c09090;
-      font-size: 2rem;
-    }
-    .gallery-placeholder span { font-size: 0.75rem; margin-top: 5px; color: #b08080; }
-    .gallery-label {
-      background: #333;
-      color: #eee;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.8rem;
-    }
+    .comment-author { font-weight: 800; font-size: 0.95rem; color: var(--navy); }
+    .comment-date { font-size: 0.78rem; color: #999; margin-left: auto; }
+    .comment-message { font-size: 0.92rem; color: #555; line-height: 1.65; }
+    .no-comments { text-align: center; color: #999; font-size: 0.95rem; padding: 30px 0; }
+
+    /* FOOTER */
     footer {
-      background: #333;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.82rem;
-      margin-top: 60px;
+      background: var(--navy); color: rgba(255,255,255,0.65);
+      text-align: center; padding: 40px 24px;
+      border-top: 2px solid rgba(233,196,106,0.3);
+    }
+    footer a { color: var(--gold); text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .profile-card { flex-direction: column; align-items: center; text-align: center; }
+      .au-cards { grid-template-columns: 1fr 1fr; }
+      .hero-text { padding: 0 20px; }
+    }
+    @media (max-width: 480px) {
+      .content { padding: 40px 16px; }
+      .au-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1><a href="index.html">🏠 우리 가족</a></h1>
-</header>
-
+<!-- NAV -->
 <nav>
-  <ul>
-    <li><a href="index.html">홈</a></li>
-    <li><a href="1.html">태을 (아들)</a></li>
-    <li><a href="2.html">지호 (딸)</a></li>
-    <li><a href="3.html">영현 (아빠)</a></li>
-    <li><a href="4.html" class="active">윤경 (엄마)</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🦘 나노바나나 가족</a>
+    <ul class="nav-links">
+      <li><a href="1.html">👦 태을</a></li>
+      <li><a href="2.html">👧 지호</a></li>
+      <li><a href="3.html">👨 영현</a></li>
+      <li><a href="4.html" class="active">👩 윤경</a></li>
+    </ul>
+  </div>
 </nav>
 
-<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="member-emoji">👩</div>
+    <h1>윤경의 호주 이야기</h1>
+    <div class="role">엄마 · 힐링 여왕</div>
+    <p class="tagline">⛰️ 블루 마운틴스에서 진짜 힐링했어요!</p>
+  </div>
+</section>
 
-  <div class="profile-hero">
-    <!-- 엄마 사진: mom.jpg로 저장 후 아래 두 줄 교체 -->
-    <!-- <div class="profile-photo"><img src="mom.jpg" alt="윤경"></div> -->
-    <div class="profile-placeholder">👩<span>엄마 사진</span></div>
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PROFILE -->
+  <div class="profile-card">
+    <div class="profile-avatar">👩</div>
     <div class="profile-info">
-      <h2>윤경</h2>
-      <div class="role-badge">엄마</div>
+      <h2>윤경 😴</h2>
       <p class="desc">
-        잠을 많이 자서 그런지 이뻐요 ^^ 😴<br>
-        가족 모두를 사랑으로 보살피는<br>
-        우리 가족의 소중한 엄마예요.
+        잠을 많이 자서 그런지 이뻐요! 가족 모두를 사랑으로 보살피는 우리 가족의 소중한 엄마예요.<br><br>
+        호주에서는 천천히 여유롭게 즐겼어요. 블루 마운틴스의 안개 낀 경치에 감탄하고, 카페에서 플랫 화이트를 마시며 쉬는 시간이 가장 행복했다고 해요. 웜뱃을 보고 "저도 저렇게 많이 자고 싶어요"라고 했답니다! 😄
       </p>
     </div>
   </div>
 
-  <div class="photo-gallery">
-    <h2>📷 윤경의 사진</h2>
-    <div class="gallery-grid">
-
-      <div class="gallery-item">
-        <!-- <img src="mom_1.jpg" alt="엄마 사진 1"> -->
-        <div class="gallery-placeholder">😊<span>사진 1</span></div>
-        <div class="gallery-label">일상 사진</div>
+  <!-- SPOTS -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🗺️</span>
+      <h2>윤경이 좋아한 관광지 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>⛰️ 블루 마운틴스</h3>
+          <p>파란 안개가 드리운 산들의 모습이 너무 평화롭고 아름다웠어요! 자연 속에서 진짜 힐링을 했어요.</p>
+        </div>
       </div>
-
-      <div class="gallery-item">
-        <!-- <img src="mom_2.jpg" alt="엄마 아이들과"> -->
-        <div class="gallery-placeholder">👩‍👧‍👦<span>사진 2</span></div>
-        <div class="gallery-label">아이들과 함께</div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1523428096881-5bd79d043006?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>🏖️ 본다이 비치</h3>
+          <p>모래밭에 누워 파란 하늘을 바라보며 쉬었어요. 바다 소리를 들으며 잠깐 낮잠도 잤는데 최고였어요!</p>
+        </div>
       </div>
-
-      <div class="gallery-item">
-        <!-- <img src="mom_3.jpg" alt="엄마 가족과"> -->
-        <div class="gallery-placeholder">👨‍👩‍👧‍👦<span>사진 3</span></div>
-        <div class="gallery-label">가족과 함께</div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>☕ 시드니 카페 거리</h3>
+          <p>세계 최고의 커피 문화를 자랑하는 시드니! 예쁜 카페들을 돌아다니며 커피를 마셨어요. 진짜 행복했어요.</p>
+        </div>
       </div>
-
     </div>
   </div>
 
-</main>
+  <!-- ANIMALS -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🐾</span>
+      <h2>윤경이 좋아한 동물 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1624811533744-f85d5325d49c?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>🐾 웜뱃</h3>
+          <p>저처럼 잠을 많이 자는 동물! 뚱뚱하고 귀엽고 느릿느릿한 모습이 너무 사랑스러워요. 완전 제 스타일!</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>😊 쿼카</h3>
+          <p>항상 행복한 표정으로 웃고 있는 쿼카! 셀카를 찍으면 항상 같이 웃어줘서 너무 기뻤어요. 너무 귀여워요!</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>🐨 코알라</h3>
+          <p>나무에 딱 붙어서 자는 모습이 너무 귀여워요! 하루에 20시간씩 잔다는 걸 듣고 "저랑 친구 해요!" 라고 했어요 😄</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- FOOD -->
+  <div class="au-section">
+    <div class="au-section-header">
+      <span class="sec-icon">🍽️</span>
+      <h2>윤경이 좋아한 음식 TOP 3</h2>
+    </div>
+    <div class="au-cards">
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">1</div>
+          <h3>☕ 플랫 화이트</h3>
+          <p>호주에서 발명된 커피! 에스프레소와 우유가 완벽하게 조화된 맛이에요. 아침마다 마셨는데 하루가 행복했어요.</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">2</div>
+          <h3>🧁 라밍턴</h3>
+          <p>초콜릿 코팅에 코코넛이 뿌려진 호주 케이크! 달콤하고 부드러워서 커피와 함께 먹으면 정말 행복해요.</p>
+        </div>
+      </div>
+      <div class="au-card">
+        <div class="au-card-img" style="background-image:url('https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400&q=80');"></div>
+        <div class="au-card-body">
+          <div class="au-card-rank">3</div>
+          <h3>🍫 팀탐 슬램</h3>
+          <p>팀탐 양쪽을 살짝 깨물고 커피로 빨아 먹는 팀탐 슬램! 온 가족이 모여 함께 했는데 진짜 재미있고 맛있었어요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="comment-sec">
+    <div class="comment-sec-title">
+      <span>💬</span> 윤경 엄마에게 남기는 가족 댓글
+    </div>
+
+    <div class="comment-form">
+      <div class="form-row">
+        <label>이름 ✍️</label>
+        <input type="text" id="cname" placeholder="예: 태을, 지호, 아빠...">
+      </div>
+      <div class="form-row">
+        <label>엄마에게 하고 싶은 말 💬</label>
+        <textarea id="cmsg" rows="4" placeholder="엄마에게 응원 메시지나 사랑의 말을 남겨주세요!"></textarea>
+      </div>
+      <button class="submit-btn" onclick="addComment()">댓글 남기기 🌏</button>
+    </div>
+
+    <div id="comment-list" class="comment-list"></div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
 <footer>
-  &copy; 나노바나나 가족 홈페이지 &nbsp;|&nbsp; 행복한 우리 가족 💕
+  <p style="margin-bottom:10px;">🦘 나노바나나 가족의 호주 여행 이야기</p>
+  <p>
+    <a href="index.html">🏠 홈</a> ·
+    <a href="1.html">👦 태을</a> ·
+    <a href="2.html">👧 지호</a> ·
+    <a href="3.html">👨 영현</a>
+  </p>
 </footer>
 
+<script>
+  const STORE = 'nanobana_comments_4';
+  const EMOJIS = ['🦘','🐨','🌊','☀️','🌺','✈️','💝','🐾','☕','🧁'];
+
+  function save(list) { localStorage.setItem(STORE, JSON.stringify(list)); }
+  function load() { return JSON.parse(localStorage.getItem(STORE) || '[]'); }
+  function esc(s) { const d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+  function render() {
+    const list = load();
+    const el = document.getElementById('comment-list');
+    if (!list.length) {
+      el.innerHTML = '<p class="no-comments">🌟 아직 댓글이 없어요. 첫 댓글을 남겨주세요!</p>';
+      return;
+    }
+    el.innerHTML = list.map(c => `
+      <div class="comment-card">
+        <div class="comment-card-header">
+          <div class="comment-avatar">${c.emoji}</div>
+          <span class="comment-author">${esc(c.author)}</span>
+          <span class="comment-date">${c.date}</span>
+        </div>
+        <p class="comment-message">${esc(c.msg)}</p>
+      </div>`).join('');
+  }
+
+  function addComment() {
+    const author = document.getElementById('cname').value.trim();
+    const msg    = document.getElementById('cmsg').value.trim();
+    if (!author || !msg) { alert('이름과 메시지를 모두 입력해주세요! 🥺'); return; }
+    const list = load();
+    list.unshift({
+      author, msg,
+      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+      date: new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' })
+    });
+    save(list);
+    document.getElementById('cname').value = '';
+    document.getElementById('cmsg').value = '';
+    render();
+    document.getElementById('comment-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  render();
+</script>
 </body>
 </html>
